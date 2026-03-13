@@ -4,4 +4,8 @@ language = "en"
 src = "src"
 title = "Book With Questions"
 
+[output.html]
+default-theme = "crt"
+preferred-dark-theme = "crt"
+
 [preprocessor.aquascope]
