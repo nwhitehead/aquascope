@@ -1,0 +1,7 @@
+[book]
+authors = ["Nathan Whitehead"]
+language = "en"
+src = "src"
+title = "Book With Questions"
+
+[preprocessor.aquascope]
