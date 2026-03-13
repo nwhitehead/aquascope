@@ -16,7 +16,7 @@ html {
 
 body {
     margin: 0;
-    font-size: 1.6rem;
+    font-size: 2.0rem;
     overflow-x: hidden;
 }
 
@@ -29,6 +29,29 @@ code {
 /* make long words/inline code not x overflow */
 main {
     overflow-wrap: break-word;
+    &:before,
+    &:after {
+        content: "";
+        transform: translateZ(0);
+        pointer-events: none;
+        mix-blend-mode: overlay;
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+        z-index: 1;
+        border-radius: 30px;
+    }
+
+    &:before {
+        background: repeating-linear-gradient(
+            rgb(218, 49, 49) 0px,
+            rgb(112, 159, 115) 2px,
+            rgb(40, 129, 206) 4px
+        );
+    }
+
 }
 
 /* make wide tables scroll if they overflow */
