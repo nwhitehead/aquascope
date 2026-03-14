@@ -322,5 +322,21 @@ html .hljs {
 
 .interpreter .step .memory-container .memory {
     border: none !important;
-    background-color: #333;
+    background-color: var(--aq-memory);
+}
+
+.interpreter {
+    border: 2px solid var(--code-bg);
+}
+
+.ferris-container {
+    position: absolute;
+    z-index: 99;
+    right: 5px;
+    top: 50px;
+    width: 80px;
+}
+
+.step .memory-container .header-text {
+    /* text-decoration: underline; */
 }

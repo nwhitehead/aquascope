@@ -68,4 +68,7 @@ html {
     --footnote-highlight: #4079ae;
 
     --overlay-bg: rgba(33, 40, 48, 0.4);
+
+    /* Aquascope stuffs */
+    --aq-memory: hsl(240, 9%, 15%);
 }
