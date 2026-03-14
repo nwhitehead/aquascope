@@ -15,11 +15,16 @@
 
 }
 
+.step-marker {
+    box-shadow: 1px 1px 1px, -1px 1px 1px, 1px -1px 1px;
+}
+
 html {
 
     --bg: rgb(25, 25, 30);
-    --fg: rgba(255, 255, 255, 0.7);;
+    --fg: rgba(255, 255, 255, 0.7);
     text-shadow: 0 0 0.11em currentColor, 1px 1px rgba(255, 0, 255, 0.5),-1px -1px rgba(0, 255, 255, 0.4);
+    box-shadow: 1px 1px 1px, -1px 1px 1px, 1px -1px 1px;
 
     --sidebar-bg: #282d3f;
     --sidebar-fg: #c8c9db;
