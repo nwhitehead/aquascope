@@ -28,7 +28,6 @@ code {
     direction: ltr !important;
 }
 
-/* make long words/inline code not x overflow */
 main {
     overflow-wrap: break-word;
     &:before,
@@ -37,13 +36,12 @@ main {
         transform: translateZ(0);
         pointer-events: none;
         mix-blend-mode: overlay;
-        position: absolute;
+        position: fixed;
         height: 100%;
         width: 100%;
         left: 0;
         top: 0;
-        z-index: 1;
-        border-radius: 30px;
+        z-index: 2;
     }
 
     &:before {
@@ -331,7 +329,7 @@ html .hljs {
 
 .ferris-container {
     position: absolute;
-    z-index: 99;
+    z-index: 1;
     right: 5px;
     top: 50px;
     width: 80px;
