@@ -599,7 +599,7 @@ let renderArrows = (
 
         let line = new LeaderLine(ptr.src, dstAnchor, {
           color,
-          size: 1,
+          size: 2.5,
           endPlugSize: 2,
           startSocket,
           endSocket: ptr.endSocket,

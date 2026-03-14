@@ -8,3 +8,6 @@ title = "Book With Questions"
 theme = "theme"
 
 [preprocessor.aquascope]
+
+[preprocessor.quiz]
+fullscreen = true

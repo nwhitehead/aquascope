@@ -14,6 +14,10 @@ This is some great contetn.
 #}
 ```
 
+And now, a _quiz_:
+
+{{#quiz ../quizzes/rust-variables.toml}}
+
 ```aquascope,interpreter,stepper,shouldFail,horizontal
 #fn main() {
  let mut v = vec![1, 2, 3];
