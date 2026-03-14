@@ -8,13 +8,15 @@
 
 html {
     font-family: "Open Sans", sans-serif;
-    color: var(--fg);
-    background-color: var(--bg);
     text-size-adjust: none;
     -webkit-text-size-adjust: none;
+    text-shadow: 0 0 0.11em currentColor, 1px 1px rgba(255, 0, 255, 0.5),-1px -1px rgba(0, 255, 255, 0.4);
+    box-shadow: 1px 1px 1px, -1px 1px 1px, 1px -1px 1px;
 }
 
 body {
+    color: var(--fg);
+    background-color: var(--bg);
     margin: 0;
     font-size: 2.0rem;
     overflow-x: hidden;
@@ -300,4 +302,25 @@ sup {
 
 .result-no-output {
     font-style: italic;
+}
+
+.step-marker {
+    box-shadow: 1px 1px 1px, -1px 1px 1px, 1px -1px 1px;
+}
+
+html .aquascope {
+    border: none;
+}
+
+html .hljs {
+    background-color: var(--code-bg);
+}
+
+.interpreter .step .header .header-bg {
+    background: none !important;
+}
+
+.interpreter .step .memory-container .memory {
+    border: none !important;
+    background-color: #333;
 }

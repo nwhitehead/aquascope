@@ -14,7 +14,7 @@ s.push_str("world");`[]`
 #}
 ```
 
-```aquascope,interpreter+permissions,stepper,shouldFail,horizontal
+```aquascope,interpreter,stepper,shouldFail,horizontal
 #fn main() {
     let mut v = vec![1, 2, 3];
     let n = &v[0];
