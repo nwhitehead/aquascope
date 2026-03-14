@@ -370,3 +370,14 @@ html .hljs {
 .interpreter .step .memory-header .header-text {
     background: var(--aq-memory-title-bg);
 }
+
+.step-marker.fail {
+    background: #800 !important;
+}
+.interpreter .step .step-header .undefined-behavior {
+    color: var(--code-fg) !important;
+}
+.interpreter .step .unallocated.error {
+    color: #f00 !important;
+    border: none !important;
+}
