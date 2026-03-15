@@ -111,10 +111,13 @@ mod tests {
     use std::io::Write;
     use tempfile::NamedTempFile;
 
-    fn testit(name: &str, contents: &str) -> Result<Value> {
+    fn testit_args(name: &str, contents: &str, should_fail: bool) -> Result<Value> {
         let mut file = NamedTempFile::new()?;
         file.write_all(contents.as_bytes())?;
         let mut cmd = Command::cargo_bin("aquascope_cli").unwrap();
+        if should_fail {
+            cmd.arg("--should-fail");
+        }
         cmd.arg("--filename");
         cmd.arg(file.path());
         let binding = cmd.assert();
@@ -126,6 +129,14 @@ mod tests {
         Ok(value)
     }
 
+    fn testit(name: &str, contents: &str) -> Result<Value> {
+        testit_args(name, contents, false)
+    }
+
+    fn testit_error(name: &str, contents: &str) -> Result<Value> {
+        testit_args(name, contents, true)
+    }
+
     #[test]
     fn invoke_help() {
         let mut cmd = Command::cargo_bin("aquascope_cli").unwrap();
@@ -134,7 +145,7 @@ mod tests {
     }
 
     #[test]
-    fn examples() -> Result<()> {
+    fn example_basic() -> Result<()> {
         testit(
             "basic",
             r#"
@@ -146,4 +157,88 @@ fn main() {
         )?;
         Ok(())
     }
+
+    #[test]
+    fn example_box() -> Result<()> {
+        testit(
+            "box",
+            r#"
+fn main() {
+  let mut x = Box::new(0);
+  *x += 1;
+  let y = x;
+}"#,
+        )?;
+        Ok(())
+    }
+
+    #[test]
+    fn example_closure() -> Result<()> {
+        testit(
+            "closure",
+            r#"
+fn main() {
+  let x = 0;
+  let f = || x;
+  let y = f();
+}"#,
+        )?;
+        Ok(())
+    }
+
+        #[test]
+    fn example_error() -> Result<()> {
+        testit_error(
+            "error",
+            r#"
+fn main() {
+  let mut v = vec![1, 2, 3];
+  let y = &v[0];
+  v.push(0);
+  let n = *y;
+}"#,
+        )?;
+        Ok(())
+    }
+
+    #[test]
+    fn example_nested_ref() -> Result<()> {
+        testit(
+            "nested_ref",
+            r#"
+fn main() {
+  let x = [(0, 1), (2, 3)];
+  let y = &x[1].1;
+}"#,
+        )?;
+        Ok(())
+    }
+
+    #[test]
+    fn example_stackref() -> Result<()> {
+        testit(
+            "stackref",
+            r#"
+fn main() {
+  let mut x = 1;
+  let y = &mut x;
+  *y += 1;
+}"#,
+        )?;
+        Ok(())
+    }
+
+    #[test]
+    fn example_tuple() -> Result<()> {
+        testit(
+            "tuple",
+            r#"
+fn main() {
+  let mut x = (0, String::from("Hello"));
+  x.0 += 1;
+}"#,
+        )?;
+        Ok(())
+    }
+
 }

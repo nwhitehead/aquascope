@@ -1,0 +1,271 @@
+{
+  "code": "\nfn main() {\n  let x = [(0, 1), (2, 3)];\n  let y = &x[1].1;\n}",
+  "result": {
+    "type": "Success"
+  },
+  "steps": [
+    {
+      "heap": {
+        "locations": []
+      },
+      "stack": {
+        "frames": [
+          {
+            "body_span": {
+              "end": {
+                "column": 1,
+                "line": 4
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 1
+              }
+            },
+            "locals": [],
+            "location": {
+              "end": {
+                "column": 9,
+                "line": 1
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 1
+              }
+            },
+            "name": "main"
+          }
+        ]
+      }
+    },
+    {
+      "heap": {
+        "locations": []
+      },
+      "stack": {
+        "frames": [
+          {
+            "body_span": {
+              "end": {
+                "column": 1,
+                "line": 4
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 1
+              }
+            },
+            "locals": [
+              {
+                "moved_paths": [],
+                "name": "x",
+                "value": {
+                  "type": "Array",
+                  "value": {
+                    "type": "All",
+                    "value": [
+                      {
+                        "type": "Tuple",
+                        "value": [
+                          {
+                            "type": "Int",
+                            "value": 0
+                          },
+                          {
+                            "type": "Int",
+                            "value": 1
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Tuple",
+                        "value": [
+                          {
+                            "type": "Int",
+                            "value": 2
+                          },
+                          {
+                            "type": "Int",
+                            "value": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "location": {
+              "end": {
+                "column": 27,
+                "line": 2
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 2,
+                "line": 2
+              }
+            },
+            "name": "main"
+          }
+        ]
+      }
+    },
+    {
+      "heap": {
+        "locations": []
+      },
+      "stack": {
+        "frames": [
+          {
+            "body_span": {
+              "end": {
+                "column": 1,
+                "line": 4
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 1
+              }
+            },
+            "locals": [
+              {
+                "moved_paths": [],
+                "name": "x",
+                "value": {
+                  "type": "Array",
+                  "value": {
+                    "type": "All",
+                    "value": [
+                      {
+                        "type": "Tuple",
+                        "value": [
+                          {
+                            "type": "Int",
+                            "value": 0
+                          },
+                          {
+                            "type": "Int",
+                            "value": 1
+                          }
+                        ]
+                      },
+                      {
+                        "type": "Tuple",
+                        "value": [
+                          {
+                            "type": "Int",
+                            "value": 2
+                          },
+                          {
+                            "type": "Int",
+                            "value": 3
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "moved_paths": [],
+                "name": "y",
+                "value": {
+                  "type": "Pointer",
+                  "value": {
+                    "path": {
+                      "parts": [
+                        {
+                          "type": "Index",
+                          "value": 1
+                        },
+                        {
+                          "type": "Field",
+                          "value": 1
+                        }
+                      ],
+                      "segment": {
+                        "type": "Stack",
+                        "value": {
+                          "frame": 0,
+                          "local": "x"
+                        }
+                      }
+                    },
+                    "range": null
+                  }
+                }
+              }
+            ],
+            "location": {
+              "end": {
+                "column": 18,
+                "line": 3
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 2,
+                "line": 3
+              }
+            },
+            "name": "main"
+          }
+        ]
+      }
+    },
+    {
+      "heap": {
+        "locations": []
+      },
+      "stack": {
+        "frames": [
+          {
+            "body_span": {
+              "end": {
+                "column": 1,
+                "line": 4
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 1
+              }
+            },
+            "locals": [],
+            "location": {
+              "end": {
+                "column": 1,
+                "line": 4
+              },
+              "filename": {
+                "private_use_as_methods_instead": 0
+              },
+              "start": {
+                "column": 0,
+                "line": 4
+              }
+            },
+            "name": "main"
+          }
+        ]
+      }
+    }
+  ]
+}
