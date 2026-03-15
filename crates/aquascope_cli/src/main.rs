@@ -104,3 +104,51 @@ fn main() -> Result<()> {
     println!("{}", data_out);
     Ok(())
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use assert_cmd::Command;
+    use serde_json::Value;
+    use tempfile::NamedTempFile;
+    use anyhow::{Result, bail};
+    use std::io::Write;
+
+    fn testit(name: &str, contents: &str) -> Result<Value> {
+        let mut file = NamedTempFile::new()?;
+        file.write_all(contents.as_bytes())?;
+        let mut cmd = Command::cargo_bin("aquascope_cli").unwrap();
+        cmd.arg("--filename");
+        cmd.arg(file.path());
+        let binding = cmd.assert();
+        let output = binding.get_output();
+        let outstring = String::from_utf8(output.stdout.clone())?;
+        cmd.assert().success();
+        let value: Value = serde_json::from_str(&outstring)?;
+        // goldie::new!()
+        //     .name(name)
+        //     .build()
+        //     .assert_json(value.clone());
+        goldie::assert!("Text");
+        Ok(value)
+    }
+
+    #[test]
+    fn invoke_help() {
+        let mut cmd = Command::cargo_bin("aquascope_cli").unwrap();
+        cmd.arg("--help");
+        cmd.assert().success();
+    }
+
+    #[test]
+    fn examples() -> Result<()> {
+        testit("basic", r#"
+fn main() {
+    let mut x = 1;
+    let y = x;
+    x += 1;
+}"#)?;
+        Ok(())
+    }
+
+}
