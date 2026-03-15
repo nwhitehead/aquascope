@@ -1,34 +1,37 @@
 use std::{
-    collections::HashMap,
     fs,
     path::PathBuf,
     process::{Command, Stdio},
-    time::Duration,
 };
 
 use anyhow::{Result, bail};
 use aquascope_workspace_utils::{miri_sysroot, run_and_get_output, rustc};
 use clap::Parser;
-use log::{Level, debug, error, info, log_enabled};
+use log::{error, info};
 use tempfile::tempdir;
 
-const TIMEOUT: u64 = 10;
-
-/// Simple program to greet a person
+/// Invoke aquascope on standalone files and show output in JSON to stdout
 #[derive(Parser, Debug)]
 #[command(version, about, long_about = None)]
 struct Args {
     /// Program source file
-    #[arg(short, long)]
+    #[arg(short = 'f', long)]
     filename: String,
 
     /// Whether to expect program to fail
-    #[arg(short, long, default_value_t = false)]
+    #[arg(short = 's', long, default_value_t = false)]
     should_fail: bool,
+
+    /// Whether to include permission flows
+    #[arg(short = 'p', long, default_value_t = false)]
+    show_permissions: bool,
 }
 
 fn main() -> Result<()> {
-    env_logger::init();
+    let mut builder = env_logger::Builder::from_default_env();
+    // Indent multiline logs by 4 spaces
+    builder.format_indent(Some(8)).init();
+
     let args = Args::parse();
 
     let miri_sysroot = miri_sysroot().expect("Need MIRI sysroot");
@@ -76,10 +79,17 @@ fn main() -> Result<()> {
 
     info!("cmd={:?}", cmd);
 
-    let mut child = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).spawn()?;
+    let child = cmd.stdout(Stdio::piped()).stderr(Stdio::piped()).spawn()?;
 
     let output = child.wait_with_output()?;
 
     info!("output={:?}", output);
+    if !output.status.success() {
+        error!("STDERR output:\n{}", String::from_utf8(output.stderr)?);
+        error!("Aquascope invocation failed on {}", "main.rs");
+        bail!("Aquascope failed");
+    }
+    // Success, show stdout output
+    println!("{}", String::from_utf8(output.stdout)?);
     Ok(())
 }
