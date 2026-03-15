@@ -1,0 +1,13 @@
+[package]
+name = "aquascope_cli"
+version = "0.1.0"
+license = "MIT"
+edition = "2024"
+
+[dependencies]
+aquascope = {version = "0.1", path = "../aquascope"}
+aquascope_workspace_utils = {version = "0.3",  path = "../aquascope_workspace_utils"}
+clap = {version = "3.1", default-features = false, features = ["std", "derive"]}
+env_logger = {version = "0.11" }
+log = "0.4.0"
+serde_json = "1"
