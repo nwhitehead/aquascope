@@ -1,4 +1,5 @@
 use std::{
+    fs,
     path::PathBuf,
     process::{Command, Stdio},
 };
@@ -7,14 +8,29 @@ use anyhow::{Result, bail};
 use aquascope_workspace_utils::{miri_sysroot, run_and_get_output, rustc};
 use log::{Level, debug, error, info, log_enabled};
 use tempfile::tempdir;
+use clap::Parser;
+
+/// Simple program to greet a person
+#[derive(Parser, Debug)]
+#[command(version, about, long_about = None)]
+struct Args {
+    /// Program source file
+    #[arg(short, long)]
+    filename: String,
+
+    /// Whether to expect program to fail
+    #[arg(short, long, default_value_t = false)]
+    should_fail: bool,
+}
 
 fn main() -> Result<()> {
     env_logger::init();
-    info!("Hello, world!");
-    let miri_sysroot = miri_sysroot()?;
-    let rustc = rustc()?;
+    let args = Args::parse();
+
+    let miri_sysroot = miri_sysroot().expect("Need MIRI sysroot");
+    let rustc = rustc().expect("Need rustc");
     let target_libdir_output =
-        run_and_get_output(Command::new(rustc.clone()).args(["--print", "target-libdir"]))?;
+        run_and_get_output(Command::new(rustc.clone()).args(["--print", "target-libdir"])).expect("Need libdir");
     let target_libdir = PathBuf::from(target_libdir_output);
     let tempdir = tempdir()?;
     let root = tempdir.path();
@@ -34,6 +50,8 @@ fn main() -> Result<()> {
     if !status.success() {
         bail!("Cargo failed");
     }
+
+    fs::write(root.join("example/src/main.rs"), "let x = 5;\n")?;
 
     Ok(())
 }
