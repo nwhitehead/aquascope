@@ -8,6 +8,7 @@ use anyhow::{Result, bail};
 use aquascope_workspace_utils::{miri_sysroot, run_and_get_output, rustc};
 use clap::Parser;
 use log::{error, info};
+use serde_json::Value;
 use tempfile::tempdir;
 
 /// Invoke aquascope on standalone files and show output in JSON to stdout
@@ -59,7 +60,10 @@ fn main() -> Result<()> {
         bail!("Cargo failed");
     }
 
-    fs::write(root.join("example/src/main.rs"), "fn main() { let x = 5; }\n")?;
+    fs::write(
+        root.join("example/src/main.rs"),
+        "fn main() { let x = 5; }\n",
+    )?;
 
     // let mut responses = HashMap::new();
     let mut cmd = Command::new("cargo");
@@ -89,7 +93,12 @@ fn main() -> Result<()> {
         error!("Aquascope invocation failed on {}", "main.rs");
         bail!("Aquascope failed");
     }
-    // Success, show stdout output
-    println!("{}", String::from_utf8(output.stdout)?);
+    // Success
+    // Parse JSON, strip Ok, stringify with indent
+    let data = String::from_utf8(output.stdout)?;
+    let v: Value = serde_json::from_str(&data)?;
+    let vok = &v["Ok"];
+    let data_out = serde_json::to_string_pretty(vok)?;
+    println!("{}", data_out);
     Ok(())
 }
