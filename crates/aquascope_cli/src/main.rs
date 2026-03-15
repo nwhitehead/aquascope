@@ -62,10 +62,7 @@ fn main() -> Result<()> {
 
     // Now read input file and write to main.rs in example project.
     let contents = fs::read(args.filename)?;
-    fs::write(
-        root.join("example/src/main.rs"),
-        &contents,
-    )?;
+    fs::write(root.join("example/src/main.rs"), &contents)?;
 
     let mut cmd = Command::new("cargo");
     cmd.arg("aquascope")
@@ -108,11 +105,11 @@ fn main() -> Result<()> {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use anyhow::{Result, bail};
     use assert_cmd::Command;
     use serde_json::Value;
-    use tempfile::NamedTempFile;
-    use anyhow::{Result, bail};
     use std::io::Write;
+    use tempfile::NamedTempFile;
 
     fn testit(name: &str, contents: &str) -> Result<Value> {
         let mut file = NamedTempFile::new()?;
@@ -125,11 +122,7 @@ mod tests {
         let outstring = String::from_utf8(output.stdout.clone())?;
         cmd.assert().success();
         let value: Value = serde_json::from_str(&outstring)?;
-        // goldie::new!()
-        //     .name(name)
-        //     .build()
-        //     .assert_json(value.clone());
-        goldie::assert!("Text");
+        goldie::new!().name(name).build().assert_json(value.clone());
         Ok(value)
     }
 
@@ -142,13 +135,15 @@ mod tests {
 
     #[test]
     fn examples() -> Result<()> {
-        testit("basic", r#"
+        testit(
+            "basic",
+            r#"
 fn main() {
     let mut x = 1;
     let y = x;
     x += 1;
-}"#)?;
+}"#,
+        )?;
         Ok(())
     }
-
 }
