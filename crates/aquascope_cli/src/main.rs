@@ -60,12 +60,13 @@ fn main() -> Result<()> {
         bail!("Cargo failed");
     }
 
+    // Now read input file and write to main.rs in example project.
+    let contents = fs::read(args.filename)?;
     fs::write(
         root.join("example/src/main.rs"),
-        "fn main() { let x = 5; }\n",
+        &contents,
     )?;
 
-    // let mut responses = HashMap::new();
     let mut cmd = Command::new("cargo");
     cmd.arg("aquascope")
         .env("SYSROOT", &miri_sysroot)
@@ -94,11 +95,12 @@ fn main() -> Result<()> {
         bail!("Aquascope failed");
     }
     // Success
-    // Parse JSON, strip Ok, stringify with indent
+    // Parse JSON, strip Ok part, stringify with indent
     let data = String::from_utf8(output.stdout)?;
     let v: Value = serde_json::from_str(&data)?;
-    let vok = &v["Ok"];
-    let data_out = serde_json::to_string_pretty(vok)?;
+    let mut v2 = v["Ok"].clone();
+    v2["code"] = String::from_utf8(contents)?.into();
+    let data_out = serde_json::to_string_pretty(&v2)?;
     println!("{}", data_out);
     Ok(())
 }

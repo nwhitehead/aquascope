@@ -8,6 +8,7 @@ edition = "2024"
 anyhow.workspace = true
 aquascope = {version = "0.1", path = "../aquascope"}
 aquascope_workspace_utils = {version = "0.3",  path = "../aquascope_workspace_utils"}
+assert_cmd = "2.2.0"
 clap = { version = "4.3", features = ["derive"] }
 env_logger = {version = "0.11" }
 log = "0.4.0"
