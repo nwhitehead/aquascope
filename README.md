@@ -67,6 +67,12 @@ Then add an Aquascope code block to one of your Markdown source files like this:
 
 Further documentation on the syntax and configuration of Aquascope blocks will be provided once the interface is more stable.
 
+## CLI
+
+```
+cargo run --bin aquascope_cli
+```
+
 ## Having trouble?
 
 If you want to use Aquascope but are having trouble finding the relevant information, please leave an issue or email us at <wcrichto@brown.edu> and <gavinleroy@brown.edu>.
