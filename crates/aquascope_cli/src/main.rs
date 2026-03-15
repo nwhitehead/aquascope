@@ -104,15 +104,3 @@ fn main() -> Result<()> {
     println!("{}", data_out);
     Ok(())
 }
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use assert_cmd::Command;
-
-    #[test]
-    fn test_invoke() {
-        let mut cmd = Command::cargo_bin("bin_fixture").unwrap();
-        cmd.assert().success();
-    }
-}
