@@ -69,9 +69,13 @@ Further documentation on the syntax and configuration of Aquascope blocks will b
 
 ## CLI
 
+To get JSON output for short programs you can use the CLI tool.
+
 ```
 cargo run --bin aquascope_cli
 ```
+
+The JSON format contains all the information necessary to draw diagrams.
 
 ## Having trouble?
 
